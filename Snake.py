@@ -7,8 +7,13 @@ def waz():
     oknoGry=pygame.display.set_mode((600,600),0,32)
     pygame.display.set_caption("Gra Wąż")
     run=True
+
     zmiennaX=300
     zmiennaY=300
+
+    pozycjeWaz = [(zmiennaX,zmiennaY)]
+    dlugoscWaz = 1
+
     jablkoX=random.randint(0,19)*30
     jablkoY=random.randint(0,19)*30
 
@@ -45,12 +50,24 @@ def waz():
             zmiennaY = 600 - 30
         ksztaltWaz=pygame.Rect((zmiennaX,zmiennaY),(30,30))
         pygame.draw.rect(oknoGry,(1,250,100),ksztaltWaz)
+
+        pozycjeWaz.append((zmiennaX,zmiennaY))
+
         if zmiennaX==jablkoX and zmiennaY == jablkoY:
             jablkoX=random.randint(0,19)*30
             jablkoY=random.randint(0,19)*30
             punkty += 1
+            dlugoscWaz = dlugoscWaz + 1
     
         pygame.draw.circle(oknoGry,(255,0,0),(jablkoX+15,jablkoY+15),15)
+
+        if len(pozycjeWaz) > dlugoscWaz:
+            del pozycjeWaz[0]
+        
+        for poz in pozycjeWaz[::-1]:
+            ksztaltWaz = pygame.Rect((poz[0],poz[1]),(30,30))
+            pygame.draw.rect(oknoGry,(100,100,100), ksztaltWaz)
+
 
         czcionka  = pygame.font.SysFont('arial', 25)
         tekst = czcionka.render("Zdobyłeś punkty {0}".format(punkty), 1, (200,200,200))
