@@ -1,6 +1,7 @@
 
 import random
 import pygame
+from sanke_class import WazKlas
 
 def waz():
     pygame.init()
