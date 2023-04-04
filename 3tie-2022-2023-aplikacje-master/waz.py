@@ -10,10 +10,15 @@ import jablko
 obiektWaz1=wazKlasa.WazKlas()
 
 #tworzenie obiektu jablko
-obiektJablko = jablko.Jablko() 
+iloscJablek = 10000 ``
+
 
 #utworzenie funkcji waz
 def waz():
+    # tworzenie obiektu do przechowywania jablek
+    obiektJablko = []
+    for nrJablko in range(0, iloscJablek):
+        obiektJablko.append(jablko.Jablko())
     #inicjalizacja biblioteki
     pygame.init()
     #utworzenie okna gry i okreslenie jego rozmiarów
@@ -54,16 +59,18 @@ def waz():
        
         #pozycja głowy weza
         glowa=obiektWaz1.getHeadPosition()
+        for nrJablko in obiektJablko[::]:
+            pozycjaJablko = nrJablko.getCoordinates()
+ 
+            #zjadanie jabłka
+            if glowa[0]==pozycjaJablko[0] and glowa[1] == pozycjaJablko[1]:
+    
+                nrJablko.randomPosition()
+                obiektWaz1.addScore()
+                obiektWaz1.addLenght()
 
-        pozycjaJablko = obiektJablko.getCoordinates()
-        #zjadanie jabłka
-        if glowa[0]==jablkoX and glowa[1] == pozycjaJablko[1]:
-            obiektJablko.randomPosition()
-            obiektWaz1.addScore()
-            obiektWaz1.addLenght()
-
-        #rysowanie jabłka
-        obiektJablko.drawApple(oknoGry)
+            #rysowanie jabłka
+            nrJablko.drawApple(oknoGry)
         #rysowanie węża
         obiektWaz1.snakeDraw(oknoGry)
        
